@@ -1,0 +1,52 @@
+//    Openbravo POS is a point of sales application designed for touch screens.
+//    Copyright (C) 2007-2009 Openbravo, S.L.
+//    http://www.openbravo.com/product/pos
+//
+//    This file is part of Openbravo POS.
+//
+//    Openbravo POS is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Openbravo POS is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Openbravo POS.  If not, see <http://www.gnu.org/licenses/>.
+
+report = new com.openbravo.pos.reports.PanelReportBean();
+
+report.setTitleKey("Menu.bytimesalescat2");
+report.setReport("/com/openbravo/reports/topcategoryqty2org");
+report.setResourceBundle("com/openbravo/reports/taxes_messages");
+
+report.setSentence(
+  "SELECT a.name AS product, sum(a.qty) AS qty, sum(a.total) AS total, a.waktu,  a.prod_cat, b.qty2 as qty2,a.barkit ,b.total2 as total2, a.org FROM view_topmenutime4 a left join(select name, sum(qty) as qty2,sum(total) as total2 from view_topmenutime4 where ?(QBF_FILTER) group by name) as b on b.name = a.name where ?(QBF_FILTER) GROUP BY org, waktu,product,prod_cat,qty2,barkit,total2 ORDER BY qty DESC");               
+
+report.addParameter("datenew");
+report.addParameter("datenew");
+report.addQBFFilter(new com.openbravo.pos.reports.JParamsDatesInterval());
+
+
+
+
+report.addField("product", com.openbravo.data.loader.Datas.STRING);
+report.addField("qty", com.openbravo.data.loader.Datas.INT);
+report.addField("total", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("waktu", com.openbravo.data.loader.Datas.INT);
+report.addField("prod_cat", com.openbravo.data.loader.Datas.STRING);
+report.addField("qty2", com.openbravo.data.loader.Datas.INT);
+report.addField("barkit", com.openbravo.data.loader.Datas.STRING);
+report.addField("total2", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("org", com.openbravo.data.loader.Datas.STRING);
+// report.addField("measure1", com.openbravo.data.loader.Datas.Double);
+
+
+
+
+
+
+report;
